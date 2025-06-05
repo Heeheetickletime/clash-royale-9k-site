@@ -272,6 +272,41 @@
   }
 
   populateArenaSelector();
+  const logKey = "noahTrophyLog";
+const output = document.getElementById("log-output");
+let trophyHistory = [];
+
+function logTrophies() {
+  const date = document.getElementById("log-date").value;
+  const count = document.getElementById("trophy-count").value;
+  if (!date || !count) return alert("Please enter both date and trophy count.");
+  const log = JSON.parse(localStorage.getItem(logKey)) || [];
+  trophyHistory.push([...log]);
+  log.push({ date, count });
+  localStorage.setItem(logKey, JSON.stringify(log));
+  renderLog();
+}
+
+function undoTrophyChange() {
+  if (trophyHistory.length > 0) {
+    const last = trophyHistory.pop();
+    localStorage.setItem(logKey, JSON.stringify(last));
+    renderLog();
+  }
+}
+
+function renderLog() {
+  const log = JSON.parse(localStorage.getItem(logKey)) || [];
+  output.innerHTML = "";
+  log.forEach(entry => {
+    const div = document.createElement("div");
+    div.className = "log-entry";
+    div.textContent = `${entry.date}: ${entry.count} trophies`;
+    output.appendChild(div);
+  });
+}
+
+renderLog();
 </script>
 </body>
 </html>
