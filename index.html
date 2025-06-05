@@ -219,7 +219,16 @@
     localStorage.setItem(logKey, JSON.stringify(log));
     renderLog();
   }
-
+  <div class="section">
+  <h2>📈 Trophy Tracker</h2>
+  <div class="trophy-log">
+    <input type="date" id="log-date" />
+    <input type="number" id="trophy-count" placeholder="Enter trophy count" />
+    <button onclick="logTrophies()">Log Trophies</button>
+    <button onclick="undoTrophyChange()">Undo Last Trophy Log</button>
+    <div id="log-output"></div>
+  </div>
+</div>
   function undoTrophyChange() {
     if (trophyHistory.length > 0) {
       const last = trophyHistory.pop();
