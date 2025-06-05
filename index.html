@@ -1,6 +1,6 @@
-<!DOCTYPE html>More actions
+<!DOCTYPE html>
 <html lang="en">
-<head>More actions
+<head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Noah's Clash Royale 9K Training</title>
@@ -92,22 +92,35 @@
       padding: 0.75rem;
       border-radius: 6px;
       color: #fff;
+      display: flex;
+      justify-content: space-between;
     }
-    .deck-list, .card-list {
+    .deck-list {
       display: flex;
       flex-wrap: wrap;
       gap: 1rem;
+      margin-top: 1rem;
     }
-    .deck, .card {
+    .deck {
       background: #403d69;
       padding: 1rem;
       border-radius: 10px;
       flex: 1 1 45%;
       min-width: 220px;
     }
-    .deck h3, .card h3 {
+    .deck h3 {
       margin-top: 0;
       color: #ffea00;
+    }
+    .arena-selector {
+      margin-top: 1rem;
+    }
+    select {
+      padding: 0.5rem;
+      font-size: 1rem;
+      border-radius: 6px;
+      border: none;
+      margin-left: 0.5rem;
     }
   </style>
 </head>
@@ -156,119 +169,116 @@
         <input type="date" id="log-date" />
         <input type="number" id="trophy-count" placeholder="Enter trophy count" />
         <button onclick="logTrophies()">Log Trophies</button>
+        <button onclick="undoLog()">Undo Last Entry</button>
         <div id="log-output"></div>
       </div>
     </div>
     <div class="section">
       <h2>🔥 Top Meta Decks (June)</h2>
-<div class="arena-selector">
-  <label for="arena-select">Choose Arena:</label>
-  <select id="arena-select" onchange="showArenaDecks()">
-    <option value="1">Arena 1: Goblin Stadium</option>
-    <option value="2">Arena 2: Bone Pit</option>
-    <option value="3">Arena 3: Barbarian Bowl</option>
-    <option value="4">Arena 4: Spell Valley</option>
-    <option value="5">Arena 5: Builder’s Workshop</option>
-    <option value="6">Arena 6: P.E.K.K.A’s Playhouse</option>
-    <option value="7">Arena 7: Royal Arena</option>
-    <option value="8">Arena 8: Frozen Peak</option>
-    <option value="9">Arena 9: Jungle Arena</option>
-    <option value="10">Arena 10: Hog Mountain</option>
-  </select>
-  <div id="arena-decks" class="deck-list"></div>
-</div>
+      <div class="arena-selector">
+        <label for="arena-select">Choose Arena:</label>
+        <select id="arena-select" onchange="showArenaDecks()">
+          <option value="1">Arena 1: Goblin Stadium</option>
+          <option value="2">Arena 2: Bone Pit</option>
+          <option value="3">Arena 3: Barbarian Bowl</option>
+          <option value="4">Arena 4: Spell Valley</option>
+          <option value="5">Arena 5: Builder’s Workshop</option>
+        </select>
+        <div id="arena-decks" class="deck-list"></div>
       </div>
     </div>
     <div class="section">
       <h2>📊 Key Card Stats</h2>
       <div class="card-list">
-        <div class="card">
+        <div class="deck">
           <h3>Balloon</h3>
           <p>Hitpoints: 2100<br />Damage: 798<br />Death Damage: 272</p>
         </div>
-        <div class="card">
+        <div class="deck">
           <h3>Valkyrie</h3>
           <p>Hitpoints: 1944<br />Damage: 178 (360° spin)</p>
         </div>
-        <div class="card">
+        <div class="deck">
           <h3>Fireball</h3>
           <p>Damage: 689<br />Crown Tower Damage: 241</p>
         </div>
-        <div class="card">
+        <div class="deck">
           <h3>Electro Wizard</h3>
           <p>Hitpoints: 944<br />Spawn Zap Damage: 159<br />Attack Damage: 159</p>
         </div>
       </div>
     </div>
   </div>
-<script>
-  const logKey = "noahTrophyLog";
-  const output = document.getElementById("log-output");
-  let trophyHistory = [];
+  <script>
+    const logKey = "noahTrophyLog";
+    const output = document.getElementById("log-output");
 
-  function logTrophies() {
-    const date = document.getElementById("log-date").value;
-    const count = document.getElementById("trophy-count").value;
-    if (!date || !count) return alert("Please enter both date and trophy count.");
-    const log = JSON.parse(localStorage.getItem(logKey)) || [];
-    trophyHistory.push([...log]);
-    log.push({ date, count });
-    localStorage.setItem(logKey, JSON.stringify(log));
-    renderLog();
-  }
-
-  function undoTrophyChange() {
-    if (trophyHistory.length > 0) {
-      const last = trophyHistory.pop();
-      localStorage.setItem(logKey, JSON.stringify(last));
+    function logTrophies() {
+      const date = document.getElementById("log-date").value;
+      const count = document.getElementById("trophy-count").value;
+      if (!date || !count) return alert("Please enter both date and trophy count.");
+      const log = JSON.parse(localStorage.getItem(logKey)) || [];
+      log.push({ date, count });
+      localStorage.setItem(logKey, JSON.stringify(log));
       renderLog();
     }
-  }
 
-  function renderLog() {
-    const log = JSON.parse(localStorage.getItem(logKey)) || [];
-    output.innerHTML = "";
-    log.forEach(entry => {
-      const div = document.createElement("div");
-      div.className = "log-entry";
-      div.textContent = `${entry.date}: ${entry.count} trophies`;
-      output.appendChild(div);
-    });
-  }
-  renderLog();
-
-  // === Arena Deck Selector ===
-  const metaDecks = {
-    1: [["Knight", "Archers", "Bomber", "Arrows", "Giant", "Mini P.E.K.K.A", "Fireball", "Musketeer"]],
-    2: [["Valkyrie", "Skeleton Army", "Baby Dragon", "Mini P.E.K.K.A", "Goblin Hut", "Fireball", "Musketeer", "Knight"]],
-    3: [["Witch", "Goblin Barrel", "Fireball", "Knight", "Mini P.E.K.K.A", "Valkyrie", "Bomber", "Musketeer"]],
-    // Add more arenas up to 23 here
-  };
-
-  function populateArenaSelector() {
-    const select = document.getElementById("arena-select");
-    for (let i = 1; i <= 23; i++) {
-      const option = document.createElement("option");
-      option.value = i;
-      option.textContent = `Arena ${i}`;
-      select.appendChild(option);
+    function undoLog() {
+      const log = JSON.parse(localStorage.getItem(logKey)) || [];
+      log.pop();
+      localStorage.setItem(logKey, JSON.stringify(log));
+      renderLog();
     }
-  }
 
-  function showMetaDecks(arena) {
-    const container = document.getElementById("meta-decks-container");
-    container.innerHTML = "";
-    const decks = metaDecks[arena];
-    if (!decks) return;
-    decks.forEach(deck => {
-      const deckDiv = document.createElement("div");
-      deckDiv.className = "deck";
-      deckDiv.innerHTML = `<h3>Arena ${arena} Deck</h3><p>${deck.join(", ")}</p>`;
-      container.appendChild(deckDiv);
-    });
-  }
+    function renderLog() {
+      const log = JSON.parse(localStorage.getItem(logKey)) || [];
+      output.innerHTML = "";
+      log.forEach(entry => {
+        const div = document.createElement("div");
+        div.className = "log-entry";
+        div.textContent = `${entry.date}: ${entry.count} trophies`;
+        output.appendChild(div);
+      });
+    }
 
-  populateArenaSelector();
-</script>
+    const arenaDecks = {
+      1: [
+        { title: "Giant Beatdown", cards: "Giant, Mini P.E.K.K.A, Musketeer, Arrows, Bomber, Spear Goblins, Knight, Archers" },
+        { title: "Goblin Barrel Cycle", cards: "Goblin Barrel, Fireball, Knight, Archers, Goblins, Bomber, Arrows, Spear Goblins" }
+      ],
+      2: [
+        { title: "Skeleton Army Control", cards: "Skeleton Army, Giant, Baby Dragon, Bomber, Archers, Minions, Arrows, Knight" },
+        { title: "Tombstone Pressure", cards: "Tombstone, Giant, Baby Dragon, Bomber, Skeleton Army, Knight, Archers, Arrows" }
+      ],
+      3: [
+        { title: "Barbarian Beatdown", cards: "Barbarians, Giant, Musketeer, Fireball, Bomber, Archers, Arrows, Mini P.E.K.K.A" },
+        { title: "Hut Spam", cards: "Goblin Hut, Spear Goblins, Archers, Knight, Giant, Arrows, Fireball, Barbarians" }
+      ],
+      4: [
+        { title: "Valkyrie Miner Control", cards: "Valkyrie, Miner, Musketeer, Fireball, Skeletons, Archers, Arrows, Mini P.E.K.K.A" },
+        { title: "Witch Beatdown", cards: "Witch, Giant, Mini P.E.K.K.A, Arrows, Archers, Fireball, Valkyrie, Bomber" }
+      ],
+      5: [
+        { title: "Double Hut Control", cards: "Goblin Hut, Furnace, Fireball, Valkyrie, Arrows, Mini P.E.K.K.A, Archers, Bomber" },
+        { title: "Balloon Freeze", cards: "Balloon, Freeze, Archers, Valkyrie, Arrows, Mini P.E.K.K.A, Bomber, Fireball" }
+      ]
+    };
+
+    function showArenaDecks() {
+      const arena = document.getElementById("arena-select").value;
+      const decks = arenaDecks[arena] || [];
+      const container = document.getElementById("arena-decks");
+      container.innerHTML = "";
+      decks.forEach(deck => {
+        const div = document.createElement("div");
+        div.className = "deck";
+        div.innerHTML = `<h3>${deck.title}</h3><p>${deck.cards}</p>`;
+        container.appendChild(div);
+      });
+    }
+
+    renderLog();
+    showArenaDecks(); // Load default
+  </script>
 </body>
 </html>
