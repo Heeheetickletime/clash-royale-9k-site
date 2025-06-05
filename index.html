@@ -161,26 +161,22 @@
     </div>
     <div class="section">
       <h2>🔥 Top Meta Decks (June)</h2>
-      <div class="deck-list">
-      <div class="section">
-  <h2>🧠 Arena Meta Decks</h2>
-  <select id="arena-select" onchange="showMetaDecks(this.value)">
-    <option value="">Select Arena</option>
+<div class="arena-selector">
+  <label for="arena-select">Choose Arena:</label>
+  <select id="arena-select" onchange="showArenaDecks()">
+    <option value="1">Arena 1: Goblin Stadium</option>
+    <option value="2">Arena 2: Bone Pit</option>
+    <option value="3">Arena 3: Barbarian Bowl</option>
+    <option value="4">Arena 4: Spell Valley</option>
+    <option value="5">Arena 5: Builder’s Workshop</option>
+    <option value="6">Arena 6: P.E.K.K.A’s Playhouse</option>
+    <option value="7">Arena 7: Royal Arena</option>
+    <option value="8">Arena 8: Frozen Peak</option>
+    <option value="9">Arena 9: Jungle Arena</option>
+    <option value="10">Arena 10: Hog Mountain</option>
   </select>
-  <div id="meta-decks-container" class="deck-list"></div>
-</div>      <div class="deck-list">
-        <div class="deck">
-          <h3>Balloon Control</h3>
-          <p>Balloon, Tesla, Valkyrie, Electro Wizard, Fireball, Arrows, Inferno Dragon, Firecracker</p>
-        </div>
-        <div class="deck">
-          <h3>Miner Poison Control</h3>
-          <p>Miner, Bomb Tower, Poison, Tornado, Phoenix, Ice Spirit, Skeletons, Magic Archer</p>
-        </div>
-        <div class="deck">
-          <h3>Royal Giant Cycle</h3>
-          <p>Royal Giant, Fisherman, Hunter, Lightning, Log, Skeletons, Mother Witch, Phoenix</p>
-        </div>
+  <div id="arena-decks" class="deck-list"></div>
+</div>
       </div>
     </div>
     <div class="section">
