@@ -198,29 +198,74 @@
       </div>
     </div>
   </div>
-  <script>
-    const logKey = "noahTrophyLog";
-    const output = document.getElementById("log-output");
-    function logTrophies() {
-      const date = document.getElementById("log-date").value;
-      const count = document.getElementById("trophy-count").value;
-      if (!date || !count) return alert("Please enter both date and trophy count.");
-      const log = JSON.parse(localStorage.getItem(logKey)) || [];
-      log.push({ date, count });
-      localStorage.setItem(logKey, JSON.stringify(log));
+<script>
+  const logKey = "noahTrophyLog";
+  const output = document.getElementById("log-output");
+  let trophyHistory = [];
+
+  function logTrophies() {
+    const date = document.getElementById("log-date").value;
+    const count = document.getElementById("trophy-count").value;
+    if (!date || !count) return alert("Please enter both date and trophy count.");
+    const log = JSON.parse(localStorage.getItem(logKey)) || [];
+    trophyHistory.push([...log]);
+    log.push({ date, count });
+    localStorage.setItem(logKey, JSON.stringify(log));
+    renderLog();
+  }
+
+  function undoTrophyChange() {
+    if (trophyHistory.length > 0) {
+      const last = trophyHistory.pop();
+      localStorage.setItem(logKey, JSON.stringify(last));
       renderLog();
     }
-    function renderLog() {
-      const log = JSON.parse(localStorage.getItem(logKey)) || [];
-      output.innerHTML = "";
-      log.forEach(entry => {
-        const div = document.createElement("div");
-        div.className = "log-entry";
-        div.textContent = `${entry.date}: ${entry.count} trophies`;
-        output.appendChild(div);
-      });
+  }
+
+  function renderLog() {
+    const log = JSON.parse(localStorage.getItem(logKey)) || [];
+    output.innerHTML = "";
+    log.forEach(entry => {
+      const div = document.createElement("div");
+      div.className = "log-entry";
+      div.textContent = `${entry.date}: ${entry.count} trophies`;
+      output.appendChild(div);
+    });
+  }
+  renderLog();
+
+  // === Arena Deck Selector ===
+  const metaDecks = {
+    1: [["Knight", "Archers", "Bomber", "Arrows", "Giant", "Mini P.E.K.K.A", "Fireball", "Musketeer"]],
+    2: [["Valkyrie", "Skeleton Army", "Baby Dragon", "Mini P.E.K.K.A", "Goblin Hut", "Fireball", "Musketeer", "Knight"]],
+    3: [["Witch", "Goblin Barrel", "Fireball", "Knight", "Mini P.E.K.K.A", "Valkyrie", "Bomber", "Musketeer"]],
+    // Add more arenas up to 23 here
+  };
+
+  function populateArenaSelector() {
+    const select = document.getElementById("arena-select");
+    for (let i = 1; i <= 23; i++) {
+      const option = document.createElement("option");
+      option.value = i;
+      option.textContent = `Arena ${i}`;
+      select.appendChild(option);
     }
-    renderLog();
-  </script>
+  }
+
+  function showMetaDecks(arena) {
+    const container = document.getElementById("meta-decks-container");
+    container.innerHTML = "";
+    const decks = metaDecks[arena];
+    if (!decks) return;
+    decks.forEach(deck => {
+      const deckDiv = document.createElement("div");
+      deckDiv.className = "deck";
+      deckDiv.innerHTML = `<h3>Arena ${arena} Deck</h3><p>${deck.join(", ")}</p>`;
+      container.appendChild(deckDiv);
+    });
+  }
+
+  populateArenaSelector();
+</script>
 </body>
 </html>
