@@ -1,6 +1,6 @@
-<!DOCTYPE html>
+<!DOCTYPE html>More actions
 <html lang="en">
-<head>
+<head>More actions
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Noah's Clash Royale 9K Training</title>
@@ -161,6 +161,7 @@
     </div>
     <div class="section">
       <h2>🔥 Top Meta Decks (June)</h2>
+      <div class="deck-list">
       <div class="section">
   <h2>🧠 Arena Meta Decks</h2>
   <select id="arena-select" onchange="showMetaDecks(this.value)">
@@ -219,16 +220,7 @@
     localStorage.setItem(logKey, JSON.stringify(log));
     renderLog();
   }
-  <div class="section">
-  <h2>📈 Trophy Tracker</h2>
-  <div class="trophy-log">
-    <input type="date" id="log-date" />
-    <input type="number" id="trophy-count" placeholder="Enter trophy count" />
-    <button onclick="logTrophies()">Log Trophies</button>
-    <button onclick="undoTrophyChange()">Undo Last Trophy Log</button>
-    <div id="log-output"></div>
-  </div>
-</div>
+
   function undoTrophyChange() {
     if (trophyHistory.length > 0) {
       const last = trophyHistory.pop();
@@ -281,41 +273,6 @@
   }
 
   populateArenaSelector();
-  const logKey = "noahTrophyLog";
-const output = document.getElementById("log-output");
-let trophyHistory = [];
-
-function logTrophies() {
-  const date = document.getElementById("log-date").value;
-  const count = document.getElementById("trophy-count").value;
-  if (!date || !count) return alert("Please enter both date and trophy count.");
-  const log = JSON.parse(localStorage.getItem(logKey)) || [];
-  trophyHistory.push([...log]);
-  log.push({ date, count });
-  localStorage.setItem(logKey, JSON.stringify(log));
-  renderLog();
-}
-
-function undoTrophyChange() {
-  if (trophyHistory.length > 0) {
-    const last = trophyHistory.pop();
-    localStorage.setItem(logKey, JSON.stringify(last));
-    renderLog();
-  }
-}
-
-function renderLog() {
-  const log = JSON.parse(localStorage.getItem(logKey)) || [];
-  output.innerHTML = "";
-  log.forEach(entry => {
-    const div = document.createElement("div");
-    div.className = "log-entry";
-    div.textContent = `${entry.date}: ${entry.count} trophies`;
-    output.appendChild(div);
-  });
-}
-
-renderLog();
 </script>
 </body>
 </html>
