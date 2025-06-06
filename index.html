@@ -2,28 +2,26 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Noah's Clash Royale 9K Training</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Noah's Clash Royale Training</title>
   <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;600;800&display=swap" rel="stylesheet">
   <style>
+    * { box-sizing: border-box; }
     body {
+      margin: 0;
       font-family: 'Rubik', sans-serif;
       background: linear-gradient(to right, #1f1c2c, #928dab);
-      margin: 0;
-      padding: 0;
       color: #f5f5f5;
+      padding-bottom: 50px;
     }
     header {
-      background-color: #111;
+      background: #111;
       padding: 1rem 2rem;
       text-align: center;
+      color: #ffd700;
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
     }
-    header h1 {
-      margin: 0;
-      font-size: 2rem;
+    h2 {
       color: #ffd700;
     }
     .container {
@@ -37,32 +35,29 @@
       padding: 1.5rem;
       margin-bottom: 2rem;
       box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
-      border: 1px solid #444;
     }
-    .section h2 {
-      margin-top: 0;
-      color: #ffd700;
+    label input[type="checkbox"] {
+      margin-right: 0.5rem;
     }
-    ul {
-      list-style: none;
-      padding: 0;
-    }
-    li {
-      margin: 0.75rem 0;
-    }
-    label {
+    .deck-list, .card-list {
       display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-    input[type="checkbox"] {
-      transform: scale(1.3);
-      accent-color: #ffd700;
-    }
-    .trophy-log {
-      display: flex;
-      flex-direction: column;
+      flex-wrap: wrap;
       gap: 1rem;
+    }
+    .deck {
+      background: #403d69;
+      padding: 1rem;
+      border-radius: 10px;
+      flex: 1 1 45%;
+      transition: transform 0.2s ease-in-out;
+    }
+    .deck:hover {
+      transform: scale(1.05);
+      background-color: #514d82;
+    }
+    .deck h3 {
+      margin-top: 0;
+      color: #ffea00;
     }
     .trophy-log input,
     .trophy-log button {
@@ -83,6 +78,7 @@
       font-weight: bold;
       cursor: pointer;
       transition: background 0.3s;
+      margin-top: 0.5rem;
     }
     button:hover {
       background: #ffcc00;
@@ -92,35 +88,13 @@
       padding: 0.75rem;
       border-radius: 6px;
       color: #fff;
-      display: flex;
-      justify-content: space-between;
-    }
-    .deck-list {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1rem;
-      margin-top: 1rem;
-    }
-    .deck {
-      background: #403d69;
-      padding: 1rem;
-      border-radius: 10px;
-      flex: 1 1 45%;
-      min-width: 220px;
-    }
-    .deck h3 {
-      margin-top: 0;
-      color: #ffea00;
-    }
-    .arena-selector {
-      margin-top: 1rem;
+      margin-top: 0.5rem;
     }
     select {
       padding: 0.5rem;
       font-size: 1rem;
       border-radius: 6px;
-      border: none;
-      margin-left: 0.5rem;
+      margin-bottom: 1rem;
     }
   </style>
 </head>
@@ -130,108 +104,57 @@
   </header>
   <div class="container">
     <div class="section">
-      <h2>🛠️ Daily Warm-Up</h2>
-      <ul>
-        <li><label><input type="checkbox" /> Tesla timing vs Hog/Balloon/Ram Rider</label></li>
-        <li><label><input type="checkbox" /> Valkyrie vs swarm placement drill</label></li>
-        <li><label><input type="checkbox" /> Spell aim: Fireball + Arrows</label></li>
-        <li><label><input type="checkbox" /> Balloon + Valk/Fireball/Spirit combo</label></li>
-      </ul>
-    </div>
-    <div class="section">
-      <h2>🌤️ Midday Practice</h2>
-      <ul>
-        <li><label><input type="checkbox" /> Play 3 Ladder Matches</label></li>
-        <li><label><input type="checkbox" /> Watch 1 win & 1 loss replay</label></li>
-        <li><label><input type="checkbox" /> Friendly match vs Phoenix, Miner, or MK decks</label></li>
-      </ul>
-    </div>
-    <div class="section">
-      <h2>🌙 Evening Push</h2>
-      <ul>
-        <li><label><input type="checkbox" /> Casual warm-up game</label></li>
-        <li><label><input type="checkbox" /> Play 3–6 Ladder Matches</label></li>
-        <li><label><input type="checkbox" /> Watch replay after each loss</label></li>
-        <li><label><input type="checkbox" /> End session on a win or break if tilted</label></li>
-      </ul>
-    </div>
-    <div class="section">
-      <h2>🎁 Bonus Training (Optional)</h2>
-      <ul>
-        <li><label><input type="checkbox" /> Check stats on RoyaleAPI or Stats Royale</label></li>
-        <li><label><input type="checkbox" /> Watch top Balloon deck players</label></li>
-        <li><label><input type="checkbox" /> Memorize Fireball + Arrows damage values</label></li>
-      </ul>
-    </div>
-    <div class="section">
       <h2>📈 Trophy Tracker</h2>
       <div class="trophy-log">
         <input type="date" id="log-date" />
         <input type="number" id="trophy-count" placeholder="Enter trophy count" />
         <button onclick="logTrophies()">Log Trophies</button>
-        <button onclick="undoLog()">Undo Last Entry</button>
+        <button onclick="undoTrophyLog()">Undo Last Entry</button>
         <div id="log-output"></div>
       </div>
     </div>
     <div class="section">
-      <h2>🔥 Top Meta Decks (June)</h2>
-      <div class="arena-selector">
-        <label for="arena-select">Choose Arena:</label>
-        <select id="arena-select" onchange="showArenaDecks()">
-          <option value="1">Arena 1: Goblin Stadium</option>
-          <option value="2">Arena 2: Bone Pit</option>
-          <option value="3">Arena 3: Barbarian Bowl</option>
-          <option value="4">Arena 4: Spell Valley</option>
-          <option value="5">Arena 5: Builder’s Workshop</option>
-        </select>
-        <div id="arena-decks" class="deck-list"></div>
-      </div>
+      <h2>🧠 Training Drills</h2>
+      <ul>
+        <li><label><input type="checkbox"> Tesla timing vs Hog/Balloon/Ram Rider</label></li>
+        <li><label><input type="checkbox"> Valkyrie vs swarm placement drill</label></li>
+        <li><label><input type="checkbox"> Spell aim: Fireball + Arrows</label></li>
+        <li><label><input type="checkbox"> Balloon combo training</label></li>
+      </ul>
     </div>
     <div class="section">
-      <h2>📊 Key Card Stats</h2>
-      <div class="card-list">
-        <div class="deck">
-          <h3>Balloon</h3>
-          <p>Hitpoints: 2100<br />Damage: 798<br />Death Damage: 272</p>
-        </div>
-        <div class="deck">
-          <h3>Valkyrie</h3>
-          <p>Hitpoints: 1944<br />Damage: 178 (360° spin)</p>
-        </div>
-        <div class="deck">
-          <h3>Fireball</h3>
-          <p>Damage: 689<br />Crown Tower Damage: 241</p>
-        </div>
-        <div class="deck">
-          <h3>Electro Wizard</h3>
-          <p>Hitpoints: 944<br />Spawn Zap Damage: 159<br />Attack Damage: 159</p>
-        </div>
-      </div>
+      <h2>🏟️ Arena Deck Selector</h2>
+      <select id="arena-select" onchange="showDecks()">
+        <option value="2">Arena 2 - Bone Pit</option>
+        <option value="3">Arena 3 - Barbarian Bowl</option>
+        <option value="4">Arena 4 - P.E.K.K.A's Playhouse</option>
+        <option value="5">Arena 5 - Spell Valley</option>
+        <option value="6">Arena 6 - Builder's Workshop</option>
+        <option value="7">Arena 7 - Royal Arena</option>
+      </select>
+      <div class="deck-list" id="deck-list"></div>
     </div>
   </div>
   <script>
-    const logKey = "noahTrophyLog";
+    const trophyKey = "trophyLog";
     const output = document.getElementById("log-output");
-
     function logTrophies() {
       const date = document.getElementById("log-date").value;
       const count = document.getElementById("trophy-count").value;
       if (!date || !count) return alert("Please enter both date and trophy count.");
-      const log = JSON.parse(localStorage.getItem(logKey)) || [];
+      const log = JSON.parse(localStorage.getItem(trophyKey)) || [];
       log.push({ date, count });
-      localStorage.setItem(logKey, JSON.stringify(log));
+      localStorage.setItem(trophyKey, JSON.stringify(log));
       renderLog();
     }
-
-    function undoLog() {
-      const log = JSON.parse(localStorage.getItem(logKey)) || [];
+    function undoTrophyLog() {
+      const log = JSON.parse(localStorage.getItem(trophyKey)) || [];
       log.pop();
-      localStorage.setItem(logKey, JSON.stringify(log));
+      localStorage.setItem(trophyKey, JSON.stringify(log));
       renderLog();
     }
-
     function renderLog() {
-      const log = JSON.parse(localStorage.getItem(logKey)) || [];
+      const log = JSON.parse(localStorage.getItem(trophyKey)) || [];
       output.innerHTML = "";
       log.forEach(entry => {
         const div = document.createElement("div");
@@ -240,45 +163,41 @@
         output.appendChild(div);
       });
     }
+    renderLog();
 
-    const arenaDecks = {
-      1: [
-        { title: "Giant Beatdown", cards: "Giant, Mini P.E.K.K.A, Musketeer, Arrows, Bomber, Spear Goblins, Knight, Archers" },
-        { title: "Goblin Barrel Cycle", cards: "Goblin Barrel, Fireball, Knight, Archers, Goblins, Bomber, Arrows, Spear Goblins" }
-      ],
+    const decks = {
       2: [
-        { title: "Skeleton Army Control", cards: "Skeleton Army, Giant, Baby Dragon, Bomber, Archers, Minions, Arrows, Knight" },
-        { title: "Tombstone Pressure", cards: "Tombstone, Giant, Baby Dragon, Bomber, Skeleton Army, Knight, Archers, Arrows" }
+        { title: "Bone Pit Beatdown", cards: "Giant, Valkyrie, Bomber, Mini P.E.K.K.A, Archers, Spear Goblins, Arrows, Fireball" }
       ],
       3: [
-        { title: "Barbarian Beatdown", cards: "Barbarians, Giant, Musketeer, Fireball, Bomber, Archers, Arrows, Mini P.E.K.K.A" },
-        { title: "Hut Spam", cards: "Goblin Hut, Spear Goblins, Archers, Knight, Giant, Arrows, Fireball, Barbarians" }
+        { title: "Barbarian Rush", cards: "Barbarians, Giant, Musketeer, Bomber, Minions, Arrows, Fireball, Knight" }
       ],
       4: [
-        { title: "Valkyrie Miner Control", cards: "Valkyrie, Miner, Musketeer, Fireball, Skeletons, Archers, Arrows, Mini P.E.K.K.A" },
-        { title: "Witch Beatdown", cards: "Witch, Giant, Mini P.E.K.K.A, Arrows, Archers, Fireball, Valkyrie, Bomber" }
+        { title: "Playhouse Control", cards: "Baby Dragon, Witch, Mini P.E.K.K.A, Skeleton Army, Fireball, Tombstone, Valkyrie, Arrows" }
       ],
       5: [
-        { title: "Double Hut Control", cards: "Goblin Hut, Furnace, Fireball, Valkyrie, Arrows, Mini P.E.K.K.A, Archers, Bomber" },
-        { title: "Balloon Freeze", cards: "Balloon, Freeze, Archers, Valkyrie, Arrows, Mini P.E.K.K.A, Bomber, Fireball" }
+        { title: "Spell Mastery", cards: "Zap, Fireball, Wizard, Minion Horde, Valkyrie, Hog Rider, Musketeer, Skeletons" }
+      ],
+      6: [
+        { title: "Builder’s Mix", cards: "X-Bow, Tesla, Archers, Ice Spirit, Skeletons, Fireball, Knight, Ice Golem" }
+      ],
+      7: [
+        { title: "Royal Control", cards: "Royal Giant, Furnace, Electro Wizard, Archers, Zap, Fireball, Mega Minion, Skeletons" }
       ]
     };
 
-    function showArenaDecks() {
+    function showDecks() {
       const arena = document.getElementById("arena-select").value;
-      const decks = arenaDecks[arena] || [];
-      const container = document.getElementById("arena-decks");
-      container.innerHTML = "";
-      decks.forEach(deck => {
+      const list = document.getElementById("deck-list");
+      list.innerHTML = "";
+      decks[arena].forEach(deck => {
         const div = document.createElement("div");
         div.className = "deck";
         div.innerHTML = `<h3>${deck.title}</h3><p>${deck.cards}</p>`;
-        container.appendChild(div);
+        list.appendChild(div);
       });
     }
-
-    renderLog();
-    showArenaDecks(); // Load default
+    showDecks();
   </script>
 </body>
 </html>
