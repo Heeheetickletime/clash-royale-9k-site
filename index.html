@@ -2,202 +2,256 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Noah's Clash Royale Training</title>
-  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;600;800&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Clash Royale Arena Guide</title>
   <style>
-    * { box-sizing: border-box; }
     body {
-      margin: 0;
-      font-family: 'Rubik', sans-serif;
-      background: linear-gradient(to right, #1f1c2c, #928dab);
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #121212;
       color: #f5f5f5;
-      padding-bottom: 50px;
+      margin: 0;
+      padding: 0;
     }
+
     header {
-      background: #111;
-      padding: 1rem 2rem;
+      background-color: #1f1f1f;
+      padding: 20px;
       text-align: center;
-      color: #ffd700;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-    }
-    h2 {
-      color: #ffd700;
-    }
-    .container {
-      max-width: 1000px;
-      margin: 2rem auto;
-      padding: 0 1rem;
-    }
-    .section {
-      background: #2d2b4e;
-      border-radius: 12px;
-      padding: 1.5rem;
-      margin-bottom: 2rem;
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
-    }
-    label input[type="checkbox"] {
-      margin-right: 0.5rem;
-    }
-    .deck-list, .card-list {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1rem;
-    }
-    .deck {
-      background: #403d69;
-      padding: 1rem;
-      border-radius: 10px;
-      flex: 1 1 45%;
-      transition: transform 0.2s ease-in-out;
-    }
-    .deck:hover {
-      transform: scale(1.05);
-      background-color: #514d82;
-    }
-    .deck h3 {
-      margin-top: 0;
-      color: #ffea00;
-    }
-    .trophy-log input,
-    .trophy-log button {
-      padding: 0.6rem;
-      font-size: 1rem;
-      border: none;
-      border-radius: 8px;
-      outline: none;
-    }
-    .trophy-log input[type="number"],
-    .trophy-log input[type="date"] {
-      background: #f8f8f8;
-      color: #333;
-    }
-    button {
-      background: #ffd700;
-      color: #1f1c2c;
+      font-size: 28px;
       font-weight: bold;
-      cursor: pointer;
-      transition: background 0.3s;
-      margin-top: 0.5rem;
+      color: #f8b400;
     }
-    button:hover {
-      background: #ffcc00;
+
+    main {
+      padding: 20px;
+      max-width: 1000px;
+      margin: auto;
     }
-    .log-entry {
-      background: #403d69;
-      padding: 0.75rem;
+
+    select, button {
+      padding: 10px;
+      font-size: 16px;
       border-radius: 6px;
-      color: #fff;
-      margin-top: 0.5rem;
+      border: none;
+      margin: 10px 0;
     }
-    select {
-      padding: 0.5rem;
-      font-size: 1rem;
-      border-radius: 6px;
-      margin-bottom: 1rem;
+
+    .deck, .tips, .log {
+      background-color: #1e1e1e;
+      padding: 15px;
+      border-radius: 10px;
+      margin-top: 20px;
+      box-shadow: 0 0 10px rgba(255,255,255,0.1);
+    }
+
+    .deck-title {
+      font-size: 20px;
+      margin-bottom: 10px;
+      color: #00d4ff;
+    }
+
+    .card {
+      display: inline-block;
+      background-color: #292929;
+      margin: 5px;
+      padding: 10px;
+      border-radius: 8px;
+    }
+
+    .log p {
+      margin: 5px 0;
+    }
+
+    .undo-btn {
+      background-color: #ff5555;
+      color: white;
+    }
+
+    .tips ul {
+      margin: 0;
+      padding-left: 20px;
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1>🏆 Noah's Clash Royale 9K Training</h1>
-  </header>
-  <div class="container">
-    <div class="section">
-      <h2>📈 Trophy Tracker</h2>
-      <div class="trophy-log">
-        <input type="date" id="log-date" />
-        <input type="number" id="trophy-count" placeholder="Enter trophy count" />
-        <button onclick="logTrophies()">Log Trophies</button>
-        <button onclick="undoTrophyLog()">Undo Last Entry</button>
-        <div id="log-output"></div>
-      </div>
-    </div>
-    <div class="section">
-      <h2>🧠 Training Drills</h2>
-      <ul>
-        <li><label><input type="checkbox"> Tesla timing vs Hog/Balloon/Ram Rider</label></li>
-        <li><label><input type="checkbox"> Valkyrie vs swarm placement drill</label></li>
-        <li><label><input type="checkbox"> Spell aim: Fireball + Arrows</label></li>
-        <li><label><input type="checkbox"> Balloon combo training</label></li>
-      </ul>
-    </div>
-    <div class="section">
-      <h2>🏟️ Arena Deck Selector</h2>
-      <select id="arena-select" onchange="showDecks()">
-        <option value="2">Arena 2 - Bone Pit</option>
-        <option value="3">Arena 3 - Barbarian Bowl</option>
-        <option value="4">Arena 4 - P.E.K.K.A's Playhouse</option>
-        <option value="5">Arena 5 - Spell Valley</option>
-        <option value="6">Arena 6 - Builder's Workshop</option>
-        <option value="7">Arena 7 - Royal Arena</option>
-      </select>
-      <div class="deck-list" id="deck-list"></div>
-    </div>
-  </div>
-  <script>
-    const trophyKey = "trophyLog";
-    const output = document.getElementById("log-output");
-    function logTrophies() {
-      const date = document.getElementById("log-date").value;
-      const count = document.getElementById("trophy-count").value;
-      if (!date || !count) return alert("Please enter both date and trophy count.");
-      const log = JSON.parse(localStorage.getItem(trophyKey)) || [];
-      log.push({ date, count });
-      localStorage.setItem(trophyKey, JSON.stringify(log));
-      renderLog();
-    }
-    function undoTrophyLog() {
-      const log = JSON.parse(localStorage.getItem(trophyKey)) || [];
-      log.pop();
-      localStorage.setItem(trophyKey, JSON.stringify(log));
-      renderLog();
-    }
-    function renderLog() {
-      const log = JSON.parse(localStorage.getItem(trophyKey)) || [];
-      output.innerHTML = "";
-      log.forEach(entry => {
-        const div = document.createElement("div");
-        div.className = "log-entry";
-        div.textContent = `${entry.date}: ${entry.count} trophies`;
-        output.appendChild(div);
-      });
-    }
-    renderLog();
+  <header>Clash Royale Arena Deck Guide</header>
+  <main>
+    <label for="arena-select">Select Your Arena:</label>
+    <select id="arena-select"></select>
+    <button onclick="logTrophy()">Log Trophies</button>
+    <button onclick="undoLog()" class="undo-btn">Undo</button>
 
+    <div class="deck" id="deck-display">
+      <div class="deck-title">Deck:</div>
+      <div id="cards"></div>
+    </div>
+
+    <div class="tips">
+      <div class="deck-title">Tips:</div>
+      <ul id="tips-list"></ul>
+    </div>
+
+    <div class="log">
+      <div class="deck-title">Trophy Log:</div>
+      <div id="trophy-log"></div>
+    </div>
+  </main>
+
+  <script>
     const decks = {
-      2: [
-        { title: "Bone Pit Beatdown", cards: "Giant, Valkyrie, Bomber, Mini P.E.K.K.A, Archers, Spear Goblins, Arrows, Fireball" }
-      ],
-      3: [
-        { title: "Barbarian Rush", cards: "Barbarians, Giant, Musketeer, Bomber, Minions, Arrows, Fireball, Knight" }
-      ],
-      4: [
-        { title: "Playhouse Control", cards: "Baby Dragon, Witch, Mini P.E.K.K.A, Skeleton Army, Fireball, Tombstone, Valkyrie, Arrows" }
-      ],
-      5: [
-        { title: "Spell Mastery", cards: "Zap, Fireball, Wizard, Minion Horde, Valkyrie, Hog Rider, Musketeer, Skeletons" }
-      ],
-      6: [
-        { title: "Builder’s Mix", cards: "X-Bow, Tesla, Archers, Ice Spirit, Skeletons, Fireball, Knight, Ice Golem" }
-      ],
-      7: [
-        { title: "Royal Control", cards: "Royal Giant, Furnace, Electro Wizard, Archers, Zap, Fireball, Mega Minion, Skeletons" }
-      ]
+      1: {
+        cards: ["Knight", "Arrows", "Bomber", "Archers", "Mini P.E.K.K.A", "Giant", "Fireball", "Musketeer"],
+        tips: ["Use Giant as a tank and support with Musketeer or Bomber.", "Defend with Mini P.E.K.K.A or Archers."]
+      },
+      2: {
+        cards: ["Baby Dragon", "Skeleton Army", "Giant", "Mini P.E.K.K.A", "Bomber", "Valkyrie", "Arrows", "Musketeer"],
+        tips: ["Skeleton Army counters tanks well.", "Baby Dragon clears swarms efficiently."]
+      },
+      3: {
+        cards: ["Witch", "Giant", "Bomber", "Mini P.E.K.K.A", "Arrows", "Valkyrie", "Fireball", "Musketeer"],
+        tips: ["Witch is great behind Giant.", "Fireball big pushes to gain elixir advantage."]
+      },
+      // Add remaining Arenas up to 23:
+      4: {
+        cards: ["P.E.K.K.A", "Zap", "Minions", "Hog Rider", "Inferno Tower", "Goblin Barrel", "Valkyrie", "Cannon"],
+        tips: ["Hog + Zap is a great push.", "P.E.K.K.A on defense shuts down tanks."]
+      },
+      5: {
+        cards: ["Wizard", "Zap", "Miner", "Minions", "Valkyrie", "Furnace", "Fireball", "Mega Minion"],
+        tips: ["Miner chip decks are strong.", "Use Fireball for splash value."]
+      },
+      6: {
+        cards: ["Elixir Collector", "Three Musketeers", "Battle Ram", "Minion Horde", "Zap", "Ice Spirit", "Bandit", "Goblin Gang"],
+        tips: ["Bait out Fireball before playing Three Musketeers.", "Battle Ram is a great punish card."]
+      },
+      7: {
+        cards: ["Royal Ghost", "Zappies", "Goblin Cage", "Lightning", "Flying Machine", "Royal Hogs", "Heal Spirit", "Hunter"],
+        tips: ["Split push with Royal Hogs.", "Zappies and Cage control the defense."]
+      },
+      8: {
+        cards: ["Golem", "Night Witch", "Baby Dragon", "Tornado", "Lumberjack", "Lightning", "Dark Prince", "Ice Wizard"],
+        tips: ["Support Golem with splash units.", "Defend then build a big counter-push."]
+      },
+      9: {
+        cards: ["X-Bow", "Tesla", "Ice Spirit", "Skeletons", "Log", "Archers", "Knight", "Fireball"],
+        tips: ["Cycle fast with 3.0 X-Bow.", "Tesla+X-Bow combo is key."]
+      },
+      10: {
+        cards: ["Mortar", "Miner", "Skeletons", "Archers", "Fireball", "Log", "Knight", "Bats"],
+        tips: ["Play Mortar defensively then counter-push.", "Miner chip works over time."]
+      },
+      11: {
+        cards: ["Balloon", "Lumberjack", "Freeze", "Mega Minion", "Baby Dragon", "Barbarian Barrel", "Inferno Dragon", "Bowler"],
+        tips: ["Freeze surprise pushes win games.", "Lumberjack rage boosts Balloon."]
+      },
+      12: {
+        cards: ["Ram Rider", "Bandit", "Magic Archer", "Electro Wizard", "Barbarian Barrel", "Lightning", "Hunter", "Baby Dragon"],
+        tips: ["Use Lightning to clear support.", "Ram Rider slows tanks."]
+      },
+      13: {
+        cards: ["Royal Giant", "Fisherman", "Mother Witch", "Hunter", "Lightning", "Goblin Cage", "Zappies", "Log"],
+        tips: ["RG + Fisherman synergy is strong.", "Mother Witch punishes swarms."]
+      },
+      14: {
+        cards: ["Electro Giant", "Phoenix", "Tornado", "Bomber", "Electro Wizard", "Cannon", "Golden Knight", "Lightning"],
+        tips: ["E-Giant is strong with support behind.", "Tornado + Bomber combo clears easily."]
+      },
+      15: {
+        cards: ["Monk", "Phoenix", "Lightning", "Tornado", "Ice Spirit", "Cannon", "Electro Dragon", "Archers"],
+        tips: ["Monk’s deflect helps versus projectiles.", "Phoenix revives for pressure."]
+      },
+      16: {
+        cards: ["Skeleton King", "Graveyard", "Poison", "Ice Wizard", "Tornado", "Barbarian Barrel", "Baby Dragon", "Tombstone"],
+        tips: ["Classic splashyard deck.", "Tornado + Ice Wiz = full control."]
+      },
+      17: {
+        cards: ["Goblin Giant", "Sparky", "Zap", "Mini P.E.K.K.A", "Dark Prince", "Goblin Gang", "Electro Wizard", "Arrows"],
+        tips: ["Use Goblin Giant to tank for Sparky.", "Electro Wizard stuns important threats."]
+      },
+      18: {
+        cards: ["Mega Knight", "Ram Rider", "Inferno Dragon", "Bandit", "Barbarian Barrel", "Lightning", "Miner", "Magic Archer"],
+        tips: ["Mega Knight jumps disrupt pushes.", "Ram Rider slows enemies."]
+      },
+      19: {
+        cards: ["Drill", "Valkyrie", "Cannon", "Fireball", "Bandit", "Golden Knight", "Log", "Skeletons"],
+        tips: ["Goblin Drill applies pressure.", "Bandit + GK punish hard."]
+      },
+      20: {
+        cards: ["Lava Hound", "Balloon", "Tombstone", "Guards", "Arrows", "Fireball", "Mega Minion", "Inferno Dragon"],
+        tips: ["Classic LavaLoon beatdown.", "Use Fireball+Arrows to clear defense."]
+      },
+      21: {
+        cards: ["Monk", "Phoenix", "Graveyard", "Poison", "Tornado", "Baby Dragon", "Barbarian Barrel", "Ice Wizard"],
+        tips: ["Poison Graveyard control.", "Phoenix flies over ground defenses."]
+      },
+      22: {
+        cards: ["Electro Giant", "Phoenix", "Lightning", "Bomber", "Golden Knight", "Tornado", "Cannon", "Heal Spirit"],
+        tips: ["E-Giant cycle deck, punish bad defense.", "Cannon = cheap defense."]
+      },
+      23: {
+        cards: ["Monk", "Phoenix", "Elixir Collector", "Three Musketeers", "Bandit", "Battle Ram", "Heal Spirit", "Minion Horde"],
+        tips: ["Split 3M = pressure both lanes.", "Collector helps pump elixir lead."]
+      }
     };
 
-    function showDecks() {
-      const arena = document.getElementById("arena-select").value;
-      const list = document.getElementById("deck-list");
-      list.innerHTML = "";
-      decks[arena].forEach(deck => {
-        const div = document.createElement("div");
-        div.className = "deck";
-        div.innerHTML = `<h3>${deck.title}</h3><p>${deck.cards}</p>`;
-        list.appendChild(div);
+    const arenaSelect = document.getElementById("arena-select");
+    const cardsDiv = document.getElementById("cards");
+    const tipsList = document.getElementById("tips-list");
+    const trophyLog = document.getElementById("trophy-log");
+    let logHistory = [];
+
+    for (let i = 1; i <= 23; i++) {
+      const option = document.createElement("option");
+      option.value = i;
+      option.textContent = `Arena ${i}`;
+      arenaSelect.appendChild(option);
+    }
+
+    arenaSelect.addEventListener("change", () => {
+      const arena = arenaSelect.value;
+      const deck = decks[arena];
+      cardsDiv.innerHTML = "";
+      tipsList.innerHTML = "";
+
+      deck.cards.forEach(card => {
+        const cardEl = document.createElement("div");
+        cardEl.className = "card";
+        cardEl.textContent = card;
+        cardsDiv.appendChild(cardEl);
+      });
+
+      deck.tips.forEach(tip => {
+        const tipEl = document.createElement("li");
+        tipEl.textContent = tip;
+        tipsList.appendChild(tipEl);
+      });
+    });
+
+    function logTrophy() {
+      const arena = arenaSelect.value;
+      const now = new Date();
+      const logEntry = `Logged Arena ${arena} at ${now.toLocaleTimeString()}`;
+      logHistory.push(logEntry);
+      renderLog();
+    }
+
+    function undoLog() {
+      logHistory.pop();
+      renderLog();
+    }
+
+    function renderLog() {
+      trophyLog.innerHTML = "";
+      logHistory.forEach(entry => {
+        const p = document.createElement("p");
+        p.textContent = entry;
+        trophyLog.appendChild(p);
       });
     }
-    showDecks();
+
+    // Auto-load first arena on start
+    arenaSelect.value = 1;
+    arenaSelect.dispatchEvent(new Event('change'));
   </script>
 </body>
 </html>
